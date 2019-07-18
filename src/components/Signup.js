@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signup } from '../redux/userReducer';
+import { Redirect } from 'react-router-dom';
 
 class Signup extends Component {
   constructor() {
@@ -23,6 +24,8 @@ class Signup extends Component {
 
   render() {
     let { username, password } = this.state;
+    let { user } = this.props;
+    if (user.loggedIn) return <Redirect to="/" />;
     return (
       <div>
         <div>
@@ -52,7 +55,7 @@ class Signup extends Component {
 }
 
 function mapStateToProps(state) {
-  return state;
+  return state.user;
 }
 
 export default connect(
