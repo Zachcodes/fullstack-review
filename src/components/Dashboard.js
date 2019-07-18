@@ -12,6 +12,9 @@ class Dashboard extends Component {
   }
 
   render() {
+    let { redirect, user } = this.props;
+    if (redirect) return <Redirect to="/login" />;
+    if (!user.loggedIn) return <div>Loading</div>;
     return (
       <div>
         Dashboard!
