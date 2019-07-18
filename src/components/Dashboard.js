@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getUser } from '../redux/userReducer';
 import Posts from './Posts';
 
-function Dashboard() {
-  return (
-    <div>
-      Dashboard!
-      <Posts />
-    </div>
-  );
+class Dashboard extends Component {
+  componentDidMount() {
+    if (!this.props.user.loggedIn) {
+      this.props.getUser();
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        Dashboard!
+        <Posts />
+      </div>
+    );
+  }
 }
 
-export default Dashboard;
+function mapStateToProps(state) {
+  return state.user;
+}
+
+export default connect(
+  mapStateToProps,
+  { getUser }
+)(Dashboard);

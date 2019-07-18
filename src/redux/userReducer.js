@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SIGNUP, LOGIN } from './actionTypes';
+import { SIGNUP, LOGIN, GET_USER } from './actionTypes';
 
 const initialState = {
   user: {},
@@ -27,6 +27,14 @@ export const login = (username, password) => {
   };
 };
 
+export const getUser = () => {
+  let data = axios.get('/api/user').then(res => res.data);
+  return {
+    type: GET_USER,
+    payload: data
+  };
+};
+
 export default function(state = initialState, action) {
   console.log('action in userReducer ', action);
   let { type, payload } = action;
@@ -43,6 +51,10 @@ export default function(state = initialState, action) {
       };
     case LOGIN + '_REJECTED':
       return { ...state, error: payload };
+    case GET_USER + '_FULFILLED':
+      return { ...state, user: payload, error: false };
+    case GET_USER + '_REJECTED':
+      return { ...state, redirect: true, error: payload };
     default:
       return state;
   }

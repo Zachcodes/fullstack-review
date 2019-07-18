@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getPosts } from '../redux/postReducer';
+import Post from './Post'
 
 class Posts extends Component {
   componentDidMount() {
@@ -13,7 +14,7 @@ class Posts extends Component {
     return (
       <div>
         {posts.map(post => {
-          return <div key={post.id}>{post.title}</div>;
+          return <Post key={post.id} {...post}/>;
         })}
       </div>
     );
